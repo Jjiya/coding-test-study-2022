@@ -1,4 +1,9 @@
+"use strict";
+
+//참고: https://velog.io/@sangbooom/JS-BFS-DFS
+
 const graph = {
+  //노드명 : 인접 노드
   A: ["B", "C"],
   B: ["A", "D"],
   C: ["A", "G", "H", "I"],
@@ -11,20 +16,28 @@ const graph = {
   J: ["I"]
 };
 
-const BFS = (graph, startNode) => {
-  const visited = []; // 탐색을 마친 노드들
-  let needVisit = []; // 탐색해야할 노드들
+(function breadthFirstSearch(graph, rootNode) {
+  //큐에 시작 노드 넣어놓기
+  let queue = [rootNode];
+  //방문 내역(=탐색 순서) 저장
+  let visited = [];
 
-  needVisit.push(startNode); // 노드 탐색 시작
+  //큐에 남은 노드가 없을 때까지 반복
+  while (0 < queue.length) {
+    console.log(`\n now queue : ${queue} --- \n`)
+    //큐의 맨 앞 노드 빼옴 (FIFO)
+    let node = queue.shift();
 
-  while (needVisit.length !== 0) { // 탐색해야할 노드가 남아있다면
-    const node = needVisit.shift(); // queue이기 때문에 선입선출, shift()를 사용한다.
-    if (!visited.includes(node)) { // 해당 노드가 탐색된 적 없다면
+    //현재 노드 탐색한 적 없으면?
+    if (!visited.includes(node)) {
+      console.log('(X) not visited node : ', node);
+      //현재 노드 방문 내역 저장
       visited.push(node);
-      needVisit = [...needVisit, ...graph[node]];
+
+      //현재 노드의 인접 노드 큐에 삽입
+      console.log("queue에 ", ...graph[node], " 넣음");
+      queue.push(...graph[node])
     }
   }
-  return visited;
-};
-
-console.log(BFS(graph, "A"));
+  console.log("visited" , visited);
+})(graph, "A");
