@@ -40,5 +40,5 @@ const fs = require("fs");
   }
 
   // 최소 표준 편차
-  console.log(minStandardDeviation);
+  console.log(minStandardDeviation.toFixed(11));
 })();
